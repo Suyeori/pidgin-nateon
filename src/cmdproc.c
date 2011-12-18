@@ -141,7 +141,7 @@ nateon_cmdproc_send_trans(NateonCmdProc *cmdproc, NateonTransaction *trans)
 
 	servconn = cmdproc->servconn;
 
-	if (!servconn->connected)
+	if (!serverconn || !servconn->connected)
 		return;
 
 	nateon_history_add(cmdproc->history, trans);
