@@ -1,10 +1,10 @@
-# Maintainer: HazE <hansun.lee at gmail.com>
-# Maintainer: kaisyu <>
+# Maintainer: Trustin Lee <t at motd.kr>
+# Contributor: HazE <hansun.lee at gmail.com>
+# Contributor: kaisyu <>
 # Contributor: Jazzbug <yeonstyle at gmail.com>
-# Contributor: Trustin Lee <t at motd.kr>
 
 pkgname=pidgin-nateon-git
-pkgver=20130504
+pkgver=0.0.0
 pkgrel=1
 pkgdesc="A pidgin plugin that provides NateOn protocol support"
 arch=('i686' 'x86_64')
@@ -13,34 +13,26 @@ group=('nateon')
 license=('GPL')
 depends=('pidgin')
 makedepends=("git" "intltool" "libtool" "automake" "autoconf")
-source=()
-md5sums=()
+source=('git+https://github.com/trustin/pidgin-nateon.git')
+md5sums=('SKIP')
 
-_gitroot="https://github.com/trustin/pidgin-nateon.git"
+_gitroot="git+https://github.com/trustin/pidgin-nateon.git"
 _gitname="pidgin-nateon"
 
-build() {
-  cd $startdir/src
-
-  if [ ! -d $_gitname ]; then
-    msg "Cloning pidgin-nateon..."
-    git clone $_gitroot $_gitname
-  else
-    msg "Updating pidgin-nateon..."
-    cd $startdir/src/$_gitname
-    git pull origin || return 1
-  fi
-
+pkgver() {
   cd $startdir/src/$_gitname
-  msg "Building pidgin-nateon..."
+  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+}
 
+build() {
+  cd $startdir/src/$_gitname
   ./autogen.sh return 1
-  ./configure --prefix=/usr || return 1
-  make || return 1
+  ./configure --prefix=/usr
+  make
 }
 
 package() {
-  cd $startdir/src/$_gitname || return 1
-  make DESTDIR=$startdir/pkg/$pkgname install || return 1
+  cd $startdir/src/$_gitname
+  make DESTDIR=$startdir/pkg/$pkgname install
 }
 
