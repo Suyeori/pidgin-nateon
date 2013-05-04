@@ -1,3 +1,4 @@
+ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = \
 		Makefile.mingw \
 		config.h.mingw \

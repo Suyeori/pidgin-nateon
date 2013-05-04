@@ -1,5 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.50])
+AC_CONFIG_MACRO_DIR([m4])
 
 m4_define([purple_lt_current], [5])
 m4_define([purple_major_version], [2])
