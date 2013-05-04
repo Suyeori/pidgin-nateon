@@ -41,6 +41,6 @@ build() {
 
 package() {
   cd $startdir/src/$_gitname || return 1
-  make DESTDIR=$startdir/pkg install || return 1
+  make DESTDIR=$startdir/pkg/$pkgname install || return 1
 }
 
