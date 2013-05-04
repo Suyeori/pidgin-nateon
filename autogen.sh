@@ -1,19 +1,25 @@
-#!/bin/sh
+#!/bin/sh -e
+
+cd "`dirname "$0"`"
+
+rm -fr m4
+mkdir -p m4
 
 echo "intltoolize..."
-intltoolize -c --force || exit 1
+intltoolize -c --force
 
 echo "aclocal..."
-aclocal || exit 1
+aclocal
 
 echo "autoheader..."
-autoheader || exit 1
+autoheader
 
 echo "autoconf..."
-autoconf || exit 1
+autoconf
 
 echo "libtoolize..."
-libtoolize || exit 1
+libtoolize
 
 echo "automake..."
-automake -a -c || exit 1
+automake -a -c
+
