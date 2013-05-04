@@ -1,0 +1,45 @@
+# Maintainer: HazE <hansun.lee at gmail.com>
+# Maintainer: kaisyu <>
+# Contributor: Jazzbug <yeonstyle at gmail.com>
+# Contributor: Trustin Lee <t at motd.kr>
+
+pkgname=pidgin-nateon-git
+pkgver=20130504
+pkgrel=1
+pkgdesc="A pidgin plugin that provides NateOn protocol support"
+arch=('i686' 'x86_64')
+url="https://github.com/trustin/pidgin-nateon"
+group=('nateon')
+license=('GPL')
+depends=('pidgin')
+makedepends=("git" "intltool" "libtool" "automake" "autoconf")
+source=()
+md5sums=()
+
+_gitroot="https://github.com/trustin/pidgin-nateon.git"
+_gitname="pidgin-nateon"
+
+build() {
+  cd $startdir/src
+
+  if [ ! -d $_gitname ]; then
+    msg "Cloning pidgin-nateon..."
+    git clone $_gitroot $_gitname
+  else
+    msg "Updating pidgin-nateon..."
+    cd $startdir/src/$_gitname
+    git pull origin || return 1
+  fi
+
+  cd $startdir/src/$_gitname
+  msg "Building pidgin-nateon..."
+
+  ./autogen.sh return 1
+  ./configure --prefix=/usr || return 1
+  make || return 1
+}
+
+package() {
+  make DESTDIR=$startdir/pkg install || return 1
+}
+
